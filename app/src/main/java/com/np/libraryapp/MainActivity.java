@@ -39,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final String LOG_TAG = "MainActivity";
 
-    private final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
-    private final int EDIT_BOOK_ACTIVITY_REQUEST_CODE = 2;
-
     private BookViewModel bookViewModel;
 
     private AppBarConfiguration appBarConfiguration;

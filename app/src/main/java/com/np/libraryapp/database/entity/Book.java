@@ -2,7 +2,7 @@ package com.np.libraryapp.database.entity;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
-import androidx.room.Ignore;
+
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "book")
