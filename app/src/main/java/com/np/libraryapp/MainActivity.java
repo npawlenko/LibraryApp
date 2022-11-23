@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -130,43 +131,46 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             });
 
-    private class BookHolder extends RecyclerView.ViewHolder {
+    private class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        private Book book;
         private TextView bookTitleTextView;
         private TextView bookAuthorTextView;
-        private ImageView editIcon;
-        private ImageView deleteIcon;
 
         public BookHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.book_list_item, parent, false));
 
             bookTitleTextView = itemView.findViewById(R.id.book_title_label);
             bookAuthorTextView = itemView.findViewById(R.id.book_author_label);
-            editIcon = itemView.findViewById(R.id.edit);
-            deleteIcon = itemView.findViewById(R.id.delete);
+
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         public void bind(Book book) {
+            this.book = book;
             bookTitleTextView.setText(book.getTitle());
             bookAuthorTextView.setText(book.getAuthor());
+        }
 
-            editIcon.setOnClickListener((view) -> {
-                Intent intent = new Intent(getApplicationContext(), EditBookActivity.class);
-                intent.putExtra(EditBookActivity.EXTRA_BOOK_ID, book.getId());
-                intent.putExtra(EditBookActivity.EXTRA_BOOK_TITLE, book.getTitle());
-                intent.putExtra(EditBookActivity.EXTRA_BOOK_AUTHOR, book.getAuthor());
-                editBookIntent.launch(intent);
-                //startActivityForResult(intent, EDIT_BOOK_ACTIVITY_REQUEST_CODE);
-            });
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), EditBookActivity.class);
+            intent.putExtra(EditBookActivity.EXTRA_BOOK_ID, book.getId());
+            intent.putExtra(EditBookActivity.EXTRA_BOOK_TITLE, book.getTitle());
+            intent.putExtra(EditBookActivity.EXTRA_BOOK_AUTHOR, book.getAuthor());
+            editBookIntent.launch(intent);
+        }
 
-            deleteIcon.setOnClickListener((view) -> {
-                bookViewModel.delete(book);
-                Snackbar.make(
-                                findViewById(R.id.coordinator_layout),
-                                getString(R.string.deleted),
-                                Snackbar.LENGTH_LONG
-                        )
-                        .show();
-            });
+        @Override
+        public boolean onLongClick(View view) {
+            bookViewModel.delete(book);
+            Snackbar.make(
+                            findViewById(R.id.coordinator_layout),
+                            getString(R.string.deleted),
+                            Snackbar.LENGTH_LONG
+                    )
+                    .show();
+            return true;
         }
     }
 
