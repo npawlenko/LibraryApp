@@ -15,4 +15,6 @@
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Book not saved because there are empty fields</string>
     <string name="book_added">Book successfully added</string>
+    <string name="deleted">Book successfully deleted</string>
+    <string name="book_edited">Book successfully edited</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.np.libraryapp.database.entity;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "book")
@@ -37,5 +39,13 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(!(obj instanceof Book)) return false;
+
+        Book book = (Book) obj;
+        return book.id == id;
     }
 }
